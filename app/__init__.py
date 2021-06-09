@@ -7,9 +7,10 @@ import time
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
-from .config import APP
+
 from .apis import router
-from .models import database
+from .config import APP
+from .models import session
 
 
 def get_app() -> FastAPI:
@@ -44,10 +45,10 @@ def get_app() -> FastAPI:
 
     @app.on_event("startup")
     async def startup():
-        await database.connect()
+        pass
 
     @app.on_event("shutdown")
     async def shutdown():
-        await database.disconnect()
+        await session.close_all()
 
     return app
