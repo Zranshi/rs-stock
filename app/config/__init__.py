@@ -4,7 +4,7 @@
 # @File     : __init__.py.py
 
 DB = {
-    'ip': '127.0.0.1',
+    'ip': 'localhost',
     'username': 'root',
     'password': 'yifan090600',
     'db_name': 'stock',
