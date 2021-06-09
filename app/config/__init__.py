@@ -8,6 +8,7 @@ DB = {
     'username': 'root',
     'password': 'yifan090600',
     'db_name': 'stock',
+    'db_port': '3306',
 }
 
 APP = {
