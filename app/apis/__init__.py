@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # @Time     : 2021/6/9 21:50
 # @Author   : Ranshi
-# @File     : __init__.py.py
+# @File     : __init__.py
 from fastapi import APIRouter
 
 from .stock import router as router_stock

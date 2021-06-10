@@ -1,16 +1,19 @@
 # -*- coding:utf-8 -*-
 # @Time     : 2021/6/9 21:50
 # @Author   : Ranshi
-# @File     : __init__.py.py
+# @File     : __init__.py
+from dataclasses import dataclass
+
 from sqlalchemy import Column, String, DateTime, Date, Float, BIGINT, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from app.config import DB
+from app.config import Db
 
 Base = declarative_base()
 
 
+@dataclass
 class Symbol(Base):
     __tablename__ = 'symbol'
 
@@ -21,6 +24,7 @@ class Symbol(Base):
     gmt_update = Column(DateTime)
 
 
+@dataclass
 class SymbolDay(Base):
     __tablename__ = 'symbol_day'
     code = Column(String(16), primary_key=True)
@@ -36,9 +40,9 @@ class SymbolDay(Base):
     gmt_update = Column(DateTime)
 
 
-SQLALCHEMY_DATABASE_URL: str = f'mysql+pymysql://{DB["username"]}:{DB["password"]}@{DB["ip"]}:' \
-                               f'{DB["db_port"]}/{DB["db_name"]}?charset=utf8'
+SQLALCHEMY_DATABASE_URL: str = f'mysql+pymysql://{Db.username}:{Db.password}@{Db.host}:' \
+                               f'{Db.db_port}/{Db.db_name}'
 
-database = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-session = sessionmaker(bind=database)
+session = sessionmaker(bind=engine)()

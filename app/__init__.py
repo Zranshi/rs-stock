@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # @Time     : 2021/6/9 21:42
 # @Author   : Ranshi
-# @File     : __init__.py.py
+# @File     : __init__.py
 import time
 
 from fastapi import FastAPI, Request
@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 
 from .apis import router
-from .config import APP
+from .config import App
 from .models import session
 
 

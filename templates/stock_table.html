@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>股票资讯</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<table id="table" class="display" style="mso-cellspacing: 0; width: 100%">
+    <thead>
+    <tr>
+        <th>code</th>
+        <th>day</th>
+        <th>start_price</th>
+        <th>end_price</th>
+        <th>high_price</th>
+        <th>low_price</th>
+        <th>volume</th>
+        <th>change_rate</th>
+        <th>volume_price</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for data in stock_data %}
+    <tr>
+        <th>{{data.code}}</th>
+        <th>{{data.day}}</th>
+        <th>{{data.start_price}}</th>
+        <th>{{data.end_price}}</th>
+        <th>{{data.high_price}}</th>
+        <th>{{data.low_price}}</th>
+        <th>{{data.volume}}</th>
+        <th>{{data.change_rate}}</th>
+        <th>{{data.volume_price}}</th>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>code</th>
+        <th>day</th>
+        <th>start_price</th>
+        <th>end_price</th>
+        <th>high_price</th>
+        <th>low_price</th>
+        <th>volume</th>
+        <th>change_rate</th>
+        <th>volume_price</th>
+    </tr>
+    </tfoot>
+</table>
+<script lang="js">
+    const myTable = $("#table").DataTable({
+        "scrollX": true,
+        destroy: true,
+        pageLength: 25,
+    });
+</script>
+</body>
+</html>
