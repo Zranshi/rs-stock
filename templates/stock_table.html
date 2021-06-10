@@ -52,10 +52,11 @@
     </tfoot>
 </table>
 <script lang="js">
-    const myTable = $("#table").DataTable({
-        "scrollX": true,
+    $("#table").DataTable({
+        scrollX: true,
         destroy: true,
         pageLength: 25,
+        autoWidth: true,
     });
 </script>
 </body>
