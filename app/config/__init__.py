@@ -3,20 +3,8 @@
 # @Author   : Ranshi
 # @File     : __init__.py
 
-# host = '120.27.211.78'
-# username = 'root'
-# password = 'lemonws'
-# db_name = 'stock'
-# db_port = '3310'
-
-# host = 'localhost'
-# username = 'root'
-# password = 'yifan090600'
-# db_name = 'stock'
-# db_port = '3306'
-
 class Db:
-    host = 'xxx.xxx.xxx.xxx'
+    host = 'xxx'
     username = 'xxx'
     password = 'xxx'
     db_name = 'xxx'
@@ -24,7 +12,7 @@ class Db:
 
 
 class App:
-    host = 'xxx.xxx.xxx.xxx'
+    host = 'xxx'
     port = 80
 
 
