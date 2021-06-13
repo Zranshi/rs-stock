@@ -2,8 +2,6 @@
 # @Time     : 2021/6/9 21:59
 # @Author   : Ranshi
 # @File     : stock.py
-import datetime
-from datetime import date
 
 import requests
 from fastapi import APIRouter, Request
@@ -17,34 +15,33 @@ templates = Jinja2Templates(directory="templates")
 router = APIRouter()
 
 
-def catch(page: int):
+def catch_symbol(page: int):
     stock_api_url = f'http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData' \
                     f'?page={page}&num=100&sort=changepercent&asc=0&node=hs_a&symbol=&_s_r_a=page'
     res = requests.get(url=stock_api_url, headers=HEADER).json()
+    if len(res) == 0:
+        return
     for item in res:
-        s = Symbol(
-            symbol=item['symbol'],
-            code=item['code'],
-            name=item['name'],
-            gmt_create=datetime.datetime.now(),
-            gmt_update=datetime.datetime.now(),
-        )
-        sd = SymbolDay(
-            code=item['code'],
-            day=date.today(),
-            start_price=item['open'],
-            end_price=item['settlement'],
-            low_price=item['low'],
-            high_price=item['high'],
-            volume=item['volume'],
-            volume_price=item['amount'],
-            change_rate=item['changepercent'],
-            gmt_create=datetime.datetime.now(),
-            gmt_update=datetime.datetime.now(),
-        )
+        s = Symbol()
+        s.init_by_json(item)
         session.add(s)
+    catch_symbol(page + 1)
+    return
+
+
+def catch_symbol_day(page: int):
+    stock_api_url = f'http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData' \
+                    f'?page={page}&num=100&sort=changepercent&asc=0&node=hs_a&symbol=&_s_r_a=page'
+    res = requests.get(url=stock_api_url, headers=HEADER).json()
+    if len(res) == 0:
+        return
+    for item in res:
+        sd = SymbolDay()
+        sd.init_by_json(item)
+        print(sd.code, sd.end_price)
         session.add(sd)
-    session.commit()
+    catch_symbol_day(page + 1)
+    return
 
 
 @router.get('/catch_today_data')
@@ -53,9 +50,9 @@ async def catch_data():
     获取当前日期的股票信息，保存至数据库
     :return:
     """
-    for i in range(1, 45):
-        catch(i)
-    return {'success': True}
+    catch_symbol_day(1)
+    session.commit()
+    return {'msg': 'success'}
 
 
 @router.get('/stock_table')

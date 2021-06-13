@@ -2,7 +2,9 @@
 # @Time     : 2021/6/9 21:50
 # @Author   : Ranshi
 # @File     : __init__.py
+import datetime
 from dataclasses import dataclass
+from datetime import date
 
 from sqlalchemy import Column, String, DateTime, Date, Float, BIGINT, create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -22,6 +24,13 @@ class Symbol(Base):
     gmt_create = Column(DateTime)
     gmt_update = Column(DateTime)
 
+    def init_by_json(self, data):
+        self.symbol = data['symbol']
+        self.code = data['code']
+        self.name = data['name']
+        self.gmt_create = datetime.datetime.now()
+        self.gmt_update = datetime.datetime.now()
+
 
 @dataclass
 class SymbolDay(Base):
@@ -37,6 +46,19 @@ class SymbolDay(Base):
     volume_price = Column(Float)
     gmt_create = Column(DateTime)
     gmt_update = Column(DateTime)
+
+    def init_by_json(self, data):
+        self.code = data['code']
+        self.day = date.today()
+        self.start_price = data['open']
+        self.end_price = data['settlement']
+        self.low_price = data['low']
+        self.high_price = data['high']
+        self.volume = data['volume']
+        self.volume_price = data['amount']
+        self.change_rate = data['changepercent']
+        self.gmt_create = datetime.datetime.now()
+        self.gmt_update = datetime.datetime.now()
 
 
 SQLALCHEMY_DATABASE_URL: str = f'mysql+pymysql://{Db.username}:{Db.password}@{Db.host}:' \
