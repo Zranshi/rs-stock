@@ -16,15 +16,15 @@
 # db_port = '3306'
 
 class Db:
-    host = '120.27.211.78'
-    username = 'root'
-    password = 'lemonws'
-    db_name = 'stock'
-    db_port = '3310'
+    host = 'xxx.xxx.xxx.xxx'
+    username = 'xxx'
+    password = 'xxx'
+    db_name = 'xxx'
+    db_port = 'xxx'
 
 
 class App:
-    host = '127.0.0.1'
+    host = 'xxx.xxx.xxx.xxx'
     port = 80
 
 

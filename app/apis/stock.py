@@ -44,18 +44,27 @@ def catch(page: int):
         )
         session.add(s)
         session.add(sd)
-        session.commit()
+    session.commit()
 
 
-# @router.get('/catch_today_data')
-# async def catch_data():
-#     for i in range(1, 45):
-#         catch(i)
-#     return {'success': True}
+@router.get('/catch_today_data')
+async def catch_data():
+    """
+    获取当前日期的股票信息，保存至数据库
+    :return:
+    """
+    for i in range(1, 45):
+        catch(i)
+    return {'success': True}
 
 
 @router.get('/stock_table')
 async def show(request: Request):
+    """
+    返回数据页面
+    :param request:
+    :return:
+    """
     return templates.TemplateResponse("stock_table.html", {
         "request": request,
         "stock_data": session.query(SymbolDay).all(),
