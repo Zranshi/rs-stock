@@ -2,7 +2,6 @@
 # @Time     : 2021/6/9 21:50
 # @Author   : Ranshi
 # @File     : __init__.py
-
 class Db:
     host = 'xxx'
     username = 'xxx'

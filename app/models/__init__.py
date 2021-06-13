@@ -4,7 +4,7 @@
 # @File     : __init__.py
 from dataclasses import dataclass
 
-from sqlalchemy import Column, String, DateTime, Date, Float, BIGINT, create_engine, PrimaryKeyConstraint
+from sqlalchemy import Column, String, DateTime, Date, Float, BIGINT, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -26,8 +26,8 @@ class Symbol(Base):
 @dataclass
 class SymbolDay(Base):
     __tablename__ = 'symbol_day'
-    code = Column(String(16))
-    day = Column(Date)
+    code = Column(String(16), primary_key=True)
+    day = Column(Date, primary_key=True)
     start_price = Column(Float)
     end_price = Column(Float)
     high_price = Column(Float)
@@ -37,9 +37,6 @@ class SymbolDay(Base):
     volume_price = Column(Float)
     gmt_create = Column(DateTime)
     gmt_update = Column(DateTime)
-    __table_args__ = (
-        PrimaryKeyConstraint('code', 'day')
-    )
 
 
 SQLALCHEMY_DATABASE_URL: str = f'mysql+pymysql://{Db.username}:{Db.password}@{Db.host}:' \
