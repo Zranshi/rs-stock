@@ -11,15 +11,15 @@
 <table id="table" class="display" style="mso-cellspacing: 0; width: 100%">
     <thead>
     <tr>
-        <th>code</th>
-        <th>day</th>
-        <th>start_price</th>
-        <th>end_price</th>
-        <th>high_price</th>
-        <th>low_price</th>
-        <th>volume</th>
-        <th>change_rate</th>
-        <th>volume_price</th>
+        <th>股票code</th>
+        <th>日期</th>
+        <th>开盘价</th>
+        <th>收盘价</th>
+        <th>最高价</th>
+        <th>最低价</th>
+        <th>成交量</th>
+        <th>换手率</th>
+        <th>成交额</th>
     </tr>
     </thead>
     <tbody>
@@ -37,19 +37,6 @@
     </tr>
     {% endfor %}
     </tbody>
-    <tfoot>
-    <tr>
-        <th>code</th>
-        <th>day</th>
-        <th>start_price</th>
-        <th>end_price</th>
-        <th>high_price</th>
-        <th>low_price</th>
-        <th>volume</th>
-        <th>change_rate</th>
-        <th>volume_price</th>
-    </tr>
-    </tfoot>
 </table>
 <script lang="js">
     $("#table").DataTable({
