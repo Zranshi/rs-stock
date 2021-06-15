@@ -10,5 +10,6 @@
     <orderEntry type="library" name="jquery-1.12.4" level="application" />
     <orderEntry type="library" name="jquery.dataTables" level="application" />
     <orderEntry type="library" name="jquery-1.12.4" level="application" />
+    <orderEntry type="library" name="echarts" level="application" />
   </component>
 </module>

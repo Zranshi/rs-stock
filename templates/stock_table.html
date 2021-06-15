@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>股票资讯</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
@@ -12,28 +12,20 @@
     <thead>
     <tr>
         <th>股票code</th>
-        <th>日期</th>
-        <th>开盘价</th>
-        <th>收盘价</th>
-        <th>最高价</th>
-        <th>最低价</th>
-        <th>成交量</th>
-        <th>换手率</th>
-        <th>成交额</th>
+        <th>股票代码</th>
+        <th>名称</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
     </tr>
     </thead>
     <tbody>
-    {% for data in stock_data %}
+    {% for data in data %}
     <tr>
-        <th>{{data.code}}</th>
-        <th>{{data.day}}</th>
-        <th>{{data.start_price}}</th>
-        <th>{{data.end_price}}</th>
-        <th>{{data.high_price}}</th>
-        <th>{{data.low_price}}</th>
-        <th>{{data.volume}}</th>
-        <th>{{data.change_rate}}</th>
-        <th>{{data.volume_price}}</th>
+        <th><a href="http://127.0.0.1:8000/apis/stock/show_chart?code={{data.code}}">{{data.code}}</a></th>
+        <th>{{data.symbol}}</th>
+        <th>{{data.name}}</th>
+        <th>{{data.gmt_create}}</th>
+        <th>{{data.gmt_update}}</th>
     </tr>
     {% endfor %}
     </tbody>
@@ -42,7 +34,7 @@
     $("#table").DataTable({
         scrollX: true,
         destroy: true,
-        pageLength: 25,
+        pageLength: 20,
         autoWidth: true,
     });
 </script>

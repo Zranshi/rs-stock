@@ -3,6 +3,8 @@
 # @Author   : Ranshi
 # @File     : stock.py
 
+from datetime import date, timedelta
+
 import requests
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
@@ -38,7 +40,6 @@ def catch_symbol_day(page: int):
     for item in res:
         sd = SymbolDay()
         sd.init_by_json(item)
-        print(sd.code, sd.end_price)
         session.add(sd)
     catch_symbol_day(page + 1)
     return
@@ -46,23 +47,61 @@ def catch_symbol_day(page: int):
 
 @router.get('/catch_today_data')
 async def catch_data():
-    """
-    获取当前日期的股票信息，保存至数据库
-    :return:
-    """
     catch_symbol_day(1)
     session.commit()
-    return {'msg': 'success'}
+    return {
+        'msg': 'success'
+    }
 
 
-@router.get('/stock_table')
-async def show(request: Request):
-    """
-    返回数据页面
-    :param request:
-    :return:
-    """
-    return templates.TemplateResponse("stock_table.html", {
-        "request": request,
-        "stock_data": session.query(SymbolDay).all(),
-    }, )
+@router.get('/show_chart')
+async def show_chart(re: Request, code: str):
+    return templates.TemplateResponse("chart.html", {
+        'request': re,
+        'code': code,
+    })
+
+
+@router.get('/chart')
+async def chart(code: str):
+    res = session.query(SymbolDay.day, SymbolDay.start_price, SymbolDay.end_price, SymbolDay.low_price,
+                        SymbolDay.high_price).filter(
+        SymbolDay.code == code).order_by(SymbolDay.day).all()
+    data, time = [], []
+    for item in res:
+        data.append([item.start_price, item.end_price, item.low_price, item.high_price])
+        time.append(item.day)
+    return {
+        'data': data,
+        'time': time
+    }
+
+
+@router.get('/show')
+async def show(re: Request, up: bool, per: float, day: int):
+    now = date.today()
+    pre = session.query(SymbolDay).filter(SymbolDay.day == now - timedelta(day)).all()
+    data_now = session.query(SymbolDay).filter(SymbolDay.day == now).all()
+    data_pre = {item.code: item for item in pre}
+    data = []
+    for item in data_now:
+        if item.code in data_pre:
+            rate = (item.end_price - data_pre[item.code].end_price) / data_pre[item.code].end_price * 100
+            if rate > per if up else rate <= per:
+                data.append({
+                    'now': item,
+                    'pre': data_pre[item.code],
+                    'rate': rate
+                })
+    return templates.TemplateResponse('show.html', {
+        'request': re,
+        'data': data,
+    })
+
+
+@router.get('/today_stock')
+async def show(re: Request):
+    return templates.TemplateResponse('stock_table.html', {
+        'request': re,
+        'data': session.query(Symbol).all(),
+    })

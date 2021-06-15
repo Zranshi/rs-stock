@@ -3,16 +3,16 @@
 # @Author   : Ranshi
 # @File     : __init__.py
 class Db:
-    host = 'xxx'
-    username = 'xxx'
-    password = 'xxx'
-    db_name = 'xxx'
-    db_port = 'xxx'
+    host = '120.27.211.78'
+    username = 'root'
+    password = 'lemonws'
+    db_name = 'stock'
+    db_port = '3310'
 
 
 class App:
-    host = 'xxx'
-    port = 80
+    host = '127.0.0.1'
+    port = 8000
 
 
 HEADER = {

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>股票资讯</title>
+    <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js" type="text/javascript"></script>
+</head>
+<body>
+<table class="display" id="table" style="mso-cellspacing: 0; width: 100%">
+    <thead>
+    <tr>
+        <th>股票code</th>
+        <th>日期</th>
+        <th>开盘价</th>
+        <th>收盘价</th>
+        <th>最高价</th>
+        <th>最低价</th>
+        <th> |</th>
+        <th>日期</th>
+        <th>开盘价</th>
+        <th>收盘价</th>
+        <th>最高价</th>
+        <th>最低价</th>
+        <th> |</th>
+        <th>比率</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for data in data %}
+    <tr>
+        <th><a href="http://127.0.0.1:8000/apis/stock/show_chart?code={{data.now.code}}">{{data.now.code}}</a></th>
+        <th>{{data.now.day}}</th>
+        <th>{{data.now.start_price}}</th>
+        <th>{{data.now.end_price}}</th>
+        <th>{{data.now.high_price}}</th>
+        <th>{{data.now.low_price}}</th>
+        <th> |</th>
+        <th>{{data.pre.day}}</th>
+        <th>{{data.pre.start_price}}</th>
+        <th>{{data.pre.end_price}}</th>
+        <th>{{data.pre.high_price}}</th>
+        <th>{{data.pre.low_price}}</th>
+        <th> |</th>
+        <th>{{data.rate}}</th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script lang="js">
+    $("#table").DataTable({
+        scrollX: true,
+        destroy: true,
+        autoWidth: true,
+        bPaginate: false,
+        bLengthChange: false,
+    });
+</script>
+</body>
+</html>
