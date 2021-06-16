@@ -12,6 +12,7 @@
     <thead>
     <tr>
         <th>股票code</th>
+        <th> |</th>
         <th>日期</th>
         <th>开盘价</th>
         <th>收盘价</th>
@@ -31,6 +32,7 @@
     {% for data in data %}
     <tr>
         <th><a href="http://127.0.0.1:8000/apis/stock/show_chart?code={{data.now.code}}">{{data.now.code}}</a></th>
+        <th> |</th>
         <th>{{data.now.day}}</th>
         <th>{{data.now.start_price}}</th>
         <th>{{data.now.end_price}}</th>

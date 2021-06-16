@@ -77,7 +77,7 @@ async def chart(code: str):
     }
 
 
-@router.get('/show')
+@router.get('/increase_search')
 async def show(re: Request, up: bool, per: float, day: int):
     now = date.today()
     pre = session.query(SymbolDay).filter(SymbolDay.day == now - timedelta(day)).all()
