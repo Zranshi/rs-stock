@@ -21,7 +21,7 @@
     <tbody>
     {% for data in data %}
     <tr>
-        <th><a href="http://127.0.0.1:8000/apis/stock/show_chart?code={{data.code}}">{{data.code}}</a></th>
+        <th><a href="http://localhost:8000/apis/stock/info?code={{data.code}}">{{data.code}}</a></th>
         <th>{{data.symbol}}</th>
         <th>{{data.name}}</th>
         <th>{{data.gmt_create}}</th>

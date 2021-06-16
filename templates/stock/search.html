@@ -31,7 +31,7 @@
     <tbody>
     {% for data in data %}
     <tr>
-        <th><a href="http://127.0.0.1:8000/apis/stock/show_chart?code={{data.now.code}}">{{data.now.code}}</a></th>
+        <th><a href="http://127.0.0.1:8000/apis/stock/info?code={{data.now.code}}">{{data.now.code}}</a></th>
         <th> |</th>
         <th>{{data.now.day}}</th>
         <th>{{data.now.start_price}}</th>
@@ -54,9 +54,8 @@
     $("#table").DataTable({
         scrollX: true,
         destroy: true,
+        pageLength: 20,
         autoWidth: true,
-        bPaginate: false,
-        bLengthChange: false,
     });
 </script>
 </body>

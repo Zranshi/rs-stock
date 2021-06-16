@@ -12,7 +12,7 @@ from fastapi.templating import Jinja2Templates
 from app.config import HEADER
 from app.models import Symbol, SymbolDay, session
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="templates/stock")
 
 router = APIRouter()
 
@@ -54,16 +54,8 @@ async def catch_data():
     }
 
 
-@router.get('/show_chart')
-async def show_chart(re: Request, code: str):
-    return templates.TemplateResponse("chart.html", {
-        'request': re,
-        'code': code,
-    })
-
-
-@router.get('/chart')
-async def chart(code: str):
+@router.get('/data')
+async def chart_data(code: str):
     res = session.query(SymbolDay.day, SymbolDay.start_price, SymbolDay.end_price, SymbolDay.low_price,
                         SymbolDay.high_price).filter(
         SymbolDay.code == code).order_by(SymbolDay.day).all()
@@ -77,8 +69,8 @@ async def chart(code: str):
     }
 
 
-@router.get('/increase_search')
-async def show(re: Request, up: bool, per: float, day: int):
+@router.get('/search')
+async def search_html(re: Request, up: bool, per: float, day: int):
     now = date.today()
     pre = session.query(SymbolDay).filter(SymbolDay.day == now - timedelta(day)).all()
     data_now = session.query(SymbolDay).filter(SymbolDay.day == now).all()
@@ -93,15 +85,24 @@ async def show(re: Request, up: bool, per: float, day: int):
                     'pre': data_pre[item.code],
                     'rate': rate
                 })
-    return templates.TemplateResponse('show.html', {
+    return templates.TemplateResponse('search.html', {
         'request': re,
         'data': data,
     })
 
 
-@router.get('/today_stock')
-async def show(re: Request):
-    return templates.TemplateResponse('stock_table.html', {
+@router.get('/all')
+async def stock_all_html(re: Request):
+    return templates.TemplateResponse('all_stock.html', {
         'request': re,
         'data': session.query(Symbol).all(),
+    })
+
+
+@router.get('/info')
+async def stock_info_html(re: Request, code: int):
+    data = session.query(Symbol).filter(Symbol.code == code).first()
+    return templates.TemplateResponse('stock_info.html', {
+        'request': re,
+        'data': data
     })
