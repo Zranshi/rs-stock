@@ -59,7 +59,7 @@
     };
     $(document).ready(function () {
         $.ajax({
-            url: 'http://127.0.0.1:8000/apis/stock/data',
+            url: '/apis/stock/data',
             dataType: 'json',
             async: true,
             data: {'code': code},
