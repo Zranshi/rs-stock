@@ -7,6 +7,7 @@ import time
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import RedirectResponse
 
 from .apis import router
 from .config import App
@@ -14,12 +15,16 @@ from .models import session
 
 
 def get_app() -> FastAPI:
+    """
+    设置好项目的app，并放回fastAPI实例
+    :return:
+    """
     app = FastAPI()
+
     origins = {
         "http://localhost",
         "http://localhost:8080",
     }
-
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
@@ -41,11 +46,15 @@ def get_app() -> FastAPI:
         response.headers["X-Process-Time"] = str(process_time)
         return response
 
-    app.include_router(router, prefix='/apis')
+    app.include_router(router, prefix='/apis')  # 配置路由
 
-    @app.on_event("startup")
-    async def startup():
-        pass
+    @app.get('/')
+    async def init():
+        """
+        根路由跳转到/apis/stock/all
+        :return:
+        """
+        return RedirectResponse('/apis/stock/all')
 
     @app.on_event("shutdown")
     async def shutdown():
