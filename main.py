@@ -9,5 +9,5 @@ from app.config import App
 
 app = get_app()
 
-if __name__ == '__main__':
-    uvicorn.run(app='main:app', host=App.host, port=App.port, reload=True, debug=True)
+if __name__ == "__main__":
+    uvicorn.run(app="main:app", host=App.host, port=App.port, reload=True, debug=True)

@@ -1,80 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{{data.name}}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
     <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
-</head>
-<body>
-<section class="features-clean">
-    <div class="container">
-        <br>
+  </head>
+  <body>
+    <section class="features-clean">
+      <div class="container">
+        <br />
         <div class="row features">
-            <div class="col-sm-6 col-lg-3 item">
-                <h3 class="name">股票名称:{{data.name}}</h3>
-            </div>
-            <div class="col-sm-6 col-lg-3 item">
-                <h3 class="name">股票代码:<span id="code">{{data.code}}</span></h3>
-            </div>
-            <div class="col-sm-6 col-lg-3 item">
-                <h3 class="name">股票标志:{{data.symbol}}</h3>
-            </div>
-            <div class="col-sm-6 col-lg-3 item">
-                <h3 class="name">预测明日比率:{{rate}}%</h3>
-            </div>
+          <div class="col-sm-6 col-lg-3 item">
+            <h3 class="name">股票名称:{{data.name}}</h3>
+          </div>
+          <div class="col-sm-6 col-lg-3 item">
+            <h3 class="name">股票代码:<span id="code">{{data.code}}</span></h3>
+          </div>
+          <div class="col-sm-6 col-lg-3 item">
+            <h3 class="name">股票标志:{{data.symbol}}</h3>
+          </div>
+          <div class="col-sm-6 col-lg-3 item">
+            <h3 class="name">预测明日比率:{{rate}}%</h3>
+          </div>
         </div>
-    </div>
-    <div id="chart" style="width: 100%; height:500px "></div>
-
-</section>
-<script type="text/javascript">
-    const code = $('#code').html();
-    const myChart = echarts.init(document.getElementById('chart'));
-    const option = {
+      </div>
+      <div id="chart" style="width: 100%; height: 500px"></div>
+    </section>
+    <script type="text/javascript">
+      const code = $('#code').html();
+      const myChart = echarts.init(document.getElementById('chart'));
+      const option = {
         xAxis: {
-            data: []
+          data: [],
         },
         yAxis: {},
-        series: [{
+        series: [
+          {
             type: 'k',
-            data: []
-        }],
+            data: [],
+          },
+        ],
         dataZoom: [
-            {
-                type: 'inside',
-                start: 0,
-                end: 100
-            },
-            {
-                show: true,
-                type: 'slider',
-                top: '90%',
-                start: 0,
-                end: 100
-            }
+          {
+            type: 'inside',
+            start: 0,
+            end: 100,
+          },
+          {
+            show: true,
+            type: 'slider',
+            top: '90%',
+            start: 0,
+            end: 100,
+          },
         ],
         tooltip: {
-            show: true
-        }
-    };
-    $(document).ready(function () {
+          show: true,
+        },
+      };
+      $(document).ready(function () {
         $.ajax({
-            url: '/apis/stock/data',
-            dataType: 'json',
-            async: true,
-            data: {'code': code},
-            type: 'GET',
-            success: function (req) {
-                option.xAxis.data = req.time
-                option.series[0].data = req.data
-                myChart.setOption(option);
-            },
+          url: '/apis/stock/data',
+          dataType: 'json',
+          async: true,
+          data: { code: code },
+          type: 'GET',
+          success: function (req) {
+            option.xAxis.data = req.time;
+            option.series[0].data = req.data;
+            myChart.setOption(option);
+          },
         });
-    })
-    myChart.setOption(option);
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+      });
+      myChart.setOption(option);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

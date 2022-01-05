@@ -10,7 +10,6 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import RedirectResponse
 
 from .apis import router
-from .config import App
 from .models import session
 
 
@@ -29,8 +28,8 @@ def get_app() -> FastAPI:
         CORSMiddleware,
         allow_origins=origins,
         allow_credentials=True,
-        allow_methods=['*'],
-        allow_headers=['*'],
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
     app.add_middleware(
@@ -38,7 +37,7 @@ def get_app() -> FastAPI:
         minimum_size=500,
     )
 
-    @app.middleware('http')
+    @app.middleware("http")
     async def add_process_time_header(request: Request, call_next):
         start_time = time.time()
         response = await call_next(request)
@@ -46,15 +45,15 @@ def get_app() -> FastAPI:
         response.headers["X-Process-Time"] = str(process_time)
         return response
 
-    app.include_router(router, prefix='/apis')  # 配置路由
+    app.include_router(router, prefix="/apis")  # 配置路由
 
-    @app.get('/')
+    @app.get("/")
     async def init():
         """
         根路由跳转到/apis/stock/all
         :return:
         """
-        return RedirectResponse('/apis/stock/all')
+        return RedirectResponse("/apis/stock/all")
 
     @app.on_event("shutdown")
     async def shutdown():
